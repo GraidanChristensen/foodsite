@@ -20,9 +20,11 @@ class Dice extends Component{
             diceImageOne: one,
             diceImageTwo: one,
             scoreOne: 0,
-            scoreTwo: 0,
+            scoreTwo: 99,
             roundScore: 0,
-            togglePlayer: true
+            togglePlayer: true,
+            toggleWin: false,
+            winner: "P1"
         }
     }
 
@@ -46,6 +48,20 @@ class Dice extends Component{
                 roundScore: this.state.roundScore += this.state.diceOne + this.state.diceTwo
             })
         }
+
+        //if players scores go over 100 they win
+        if((this.state.scoreOne + this.state.roundScore) >= 100 && this.state.togglePlayer === true){
+            this.setState({
+                toggleWin: true,
+            })
+        }
+
+        if((this.state.scoreTwo + this.state.roundScore) >= 100 && this.state.togglePlayer === false){
+            this.setState({
+                toggleWin: true,
+                winner: "P2"
+            })
+        }
     }
 
     saveScore = () => {
@@ -65,6 +81,19 @@ class Dice extends Component{
         }
     }
 
+    playAgain = () => {
+        this.setState({
+            diceImageOne: one,
+            diceImageTwo: one,
+            scoreOne: 0,
+            scoreTwo: 0,
+            roundScore: 0,
+            togglePlayer: true,
+            toggleWin: false,
+            winner: "P1"
+        })
+    }
+
     render(){
         return(
             <div className="Dice">
@@ -77,15 +106,21 @@ class Dice extends Component{
                     </div>
 
 
-                    <div className="theDice">
+                    <div onClick={() => this.rollDice()} className="theDice">
                         <img className="diceOne" src={this.state.diceImageOne}/>
                         <img className="diceTwo" src={this.state.diceImageTwo}/>
                     </div>
                     
-                    <h4>Round Score: {this.state.roundScore}</h4>
-                    <button className="roll" onClick={() => this.rollDice()}>Roll</button>
-                    <button className="roll" onClick={() => this.saveScore()}>Stay</button>
-                    
+                    { !this.state.toggleWin ? 
+                    <div>
+                        <h4>Round Score: {this.state.roundScore}</h4>
+                        <button className="roll" onClick={() => this.rollDice()}>Roll</button>
+                        <button className="roll" onClick={() => this.saveScore()}>Stay</button>
+                    </div>:
+                    <div className="winMessage">
+                        <h2>{this.state.toggleWin ? `${this.state.winner} Wins!`: ""}</h2>
+                        <button className="roll" onClick={() => {this.playAgain()}}>Play Again</button>
+                    </div>}
                 </div>
             </div>
         )
