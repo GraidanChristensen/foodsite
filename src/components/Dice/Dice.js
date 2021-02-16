@@ -6,6 +6,7 @@ import three from '../../Images/three.png'
 import four from '../../Images/four.png'
 import five from '../../Images/five.png'
 import six from '../../Images/six.png'
+import arcade from '../../Images/arcade.png'
 
 
 class Dice extends Component{
@@ -48,20 +49,33 @@ class Dice extends Component{
     }
 
     saveScore = () => {
-        
+        if(this.state.togglePlayer === true){
+            this.setState({
+                scoreOne: this.state.scoreOne += this.state.roundScore,
+                togglePlayer: !this.state.togglePlayer,
+                roundScore: 0
+            })
+        }
+        else {
+            this.setState({
+                scoreTwo: this.state.scoreTwo += this.state.roundScore,
+                togglePlayer: !this.state.togglePlayer,
+                roundScore: 0
+            })
+        }
     }
 
     render(){
         return(
             <div className="Dice">
-                <img className="arcade" src="https://webstockreview.net/images/arcade-clipart-arcade-screen-7.jpg"/>
+                <img className="arcade" src={arcade}/>
 
                 <div className='dicegame'>
                     <div className="diceplayers">
-                        <h3>{this.state.togglePlayer ? "P1 <-" : "P1"}</h3>
-                        {/* <img src="https://i.pinimg.com/originals/91/64/d3/9164d3ec2bc19742d831f0b9a20a0de5.png"/> */}
-                        <h3>{this.state.togglePlayer ? "P2" : "-> P2"}</h3>
+                        <h3>{this.state.togglePlayer ? `P1 ${this.state.scoreOne}<-` : `P1 ${this.state.scoreOne}`}</h3>
+                        <h3>{this.state.togglePlayer ? `P2 ${this.state.scoreTwo}` : `-> P2 ${this.state.scoreTwo}`}</h3>
                     </div>
+
 
                     <div className="theDice">
                         <img className="diceOne" src={this.state.diceImageOne}/>
@@ -70,7 +84,8 @@ class Dice extends Component{
                     
                     <h4>Round Score: {this.state.roundScore}</h4>
                     <button className="roll" onClick={() => this.rollDice()}>Roll</button>
-
+                    <button className="roll" onClick={() => this.saveScore()}>Stay</button>
+                    
                 </div>
             </div>
         )
