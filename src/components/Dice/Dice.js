@@ -8,23 +8,23 @@ import five from '../../Images/five.png'
 import six from '../../Images/six.png'
 import arcade from '../../Images/arcade.png'
 
-
 class Dice extends Component{
     constructor(){
         super();
 
         this.state = {
             diceImages: [one, two, three, four, five, six],
-            diceOne: 1,
-            diceTwo: 1,
+            diceOne: null,
+            diceTwo: null,
             diceImageOne: one,
             diceImageTwo: one,
             scoreOne: 0,
-            scoreTwo: 99,
+            scoreTwo: 0,
             roundScore: 0,
             togglePlayer: true,
             toggleWin: false,
-            winner: "P1"
+            winner: "P1",
+            mainMenuToggle: true
         }
     }
 

@@ -1,6 +1,6 @@
 .Header{
     height: 100px;
-    background-color:rgb(241, 241, 241);
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
